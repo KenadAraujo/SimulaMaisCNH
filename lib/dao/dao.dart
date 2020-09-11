@@ -5,10 +5,10 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DAO{
-  
-  static final String _databaseNameAssets = "assets/db/simulamaiscnh.db";
-  static final String _databaseName = "simulamaiscnh.db";
-  
+
+  static final String _databaseName = "simula_mais.db";
+  static final int _databaseVersion = 1;
+
   DAO._privateContructor();
   static final DAO instance = DAO._privateContructor();
 
@@ -21,29 +21,39 @@ class DAO{
   }
 
   Future _initDatabase() async{
-    var databasesPath = await getDatabasesPath();
-    var path = join(databasesPath, _databaseNameAssets);
-
-    var exists = await databaseExists(path);
-
-    if (!exists) {
-      print("Creating new copy from asset");
-      try {
-        await Directory(dirname(path)).create(recursive: true);
-      } catch (_) {}
-        
-      // Copy from asset
-      ByteData data = await rootBundle.load(join(_databaseNameAssets, _databaseName));
-      List<int> bytes =
-        data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-      
-      // Write and flush the bytes written
-      await File(path).writeAsBytes(bytes, flush: true);
-
-    } else {
-      print("Opening existing database");
-    }
-    // open the database
-    _database = await openDatabase(path, readOnly: true);
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path,_databaseName);
+    return await openDatabase(
+      path,
+      version: _databaseVersion,
+      onCreate: _onCreate
+    );
   }
+  Future _onCreate(Database db,int version) async{
+    await db.execute('''
+      CREATE TABLE questao (
+        id INTEGER PRIMARY KEY ASC AUTOINCREMENT NOT NULL,
+        categoria           VARCHAR (500),
+        descricao           VARCHAR (500),
+        imagem              VARCHAR (200),
+        alternativa_A       VARCHAR (500),
+        alternativa_B       VARCHAR (500),
+        alternativa_C       VARCHAR (500),
+        alternativa_D       VARCHAR (500),
+        alternativa_E       VARCHAR (500),
+        alternativa_correta VARCHAR (2) 
+    )''');
+    await db.execute('''
+    CREATE TABLE respostas_questoes (
+        id                     INTEGER       PRIMARY KEY AUTOINCREMENT
+                                            NOT NULL
+                                            UNIQUE,
+        questao_id             BIGINT        NOT NULL,
+        alternativa_respondida VARCHAR (2),
+        alternativa_correta    VARCHAR (2),
+        data_resposta          DATETIME,
+        categoria_da_questao   VARCHAR (200) 
+    )''');
+  }
+
 }

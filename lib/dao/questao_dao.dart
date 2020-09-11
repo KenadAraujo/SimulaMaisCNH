@@ -1,7 +1,12 @@
 import 'package:simulamaiscnh/dao/abstract_dao.dart';
+import 'package:simulamaiscnh/dao/dao.dart';
 import 'package:simulamaiscnh/models/questao.dart';
+import 'package:sqflite/sqflite.dart';
 
 class QuestaoDAO extends AbstractDAO<Questao>{
+
+  static final String tableName = "questions";
+
   Future<void> save(Questao modelo){
 
   }
@@ -14,8 +19,14 @@ class QuestaoDAO extends AbstractDAO<Questao>{
   Future<Questao> find(int id){
 
   }
-  Future<List<Questao>> findAll(){
-
+  Future<List<Questao>> findAll() async{
+    Database database = await DAO.instance.database;
+    List<Map> map = await database.query(tableName);
+    if(map.isNotEmpty){
+      return toModelList(map);
+    }else{
+      return new List();
+    }
   }
 
   Questao toModel(Map map){
