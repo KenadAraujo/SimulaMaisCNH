@@ -32,8 +32,8 @@ class DAO{
   Future _onCreate(Database db,int version) async{
     await db.execute('''
       CREATE TABLE questao (
-        id INTEGER PRIMARY KEY ASC AUTOINCREMENT NOT NULL,
-        categoria           VARCHAR (500),
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
+        categoria           VARCHAR (200),
         descricao           VARCHAR (500),
         imagem              VARCHAR (200),
         alternativa_A       VARCHAR (500),
@@ -44,10 +44,8 @@ class DAO{
         alternativa_correta VARCHAR (2) 
     )''');
     await db.execute('''
-    CREATE TABLE respostas_questoes (
-        id                     INTEGER       PRIMARY KEY AUTOINCREMENT
-                                            NOT NULL
-                                            UNIQUE,
+    CREATE TABLE resposta_questao (
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
         questao_id             BIGINT        NOT NULL,
         alternativa_respondida VARCHAR (2),
         alternativa_correta    VARCHAR (2),

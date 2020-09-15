@@ -5,19 +5,27 @@ import 'package:sqflite/sqflite.dart';
 
 class QuestaoDAO extends AbstractDAO<Questao>{
 
-  static final String tableName = "questions";
+  static final String tableName = "questao";
 
-  Future<void> save(Questao modelo){
-
+  Future<void> save(Questao modelo) async{
+    Database database = await DAO.instance.database;
+    await database.insert(tableName, toMap(modelo));
   }
-  Future<void> update(Questao modelo){
-
+  Future<void> update(Questao modelo) async{
+    Database database = await DAO.instance.database;
+    await database.update(tableName, toMap(modelo),where: "id = ?",whereArgs: [modelo.id]);
   }
-  Future<void> delete(Questao modelo){
-
+  Future<void> delete(Questao modelo) async{
+    Database database = await DAO.instance.database;
+    await database.delete(tableName,where: "id = ?",whereArgs: [modelo.id]);
   }
-  Future<Questao> find(int id){
-
+  Future<Questao> find(int id) async{
+    Database database = await DAO.instance.database;
+    List<Map> map = await database.query(tableName,where: "id = ?",whereArgs: [id]);
+    if(map.isNotEmpty){
+      return toModel(map[0]);
+    }
+    return null;
   }
   Future<List<Questao>> findAll() async{
     Database database = await DAO.instance.database;
@@ -32,16 +40,15 @@ class QuestaoDAO extends AbstractDAO<Questao>{
   Questao toModel(Map map){
     Questao questao = new Questao();
     questao.id = map['id'];
-    questao.tipo = map['type'];
-    questao.categoria = map['category'];
-    questao.imagem = map['image'];
-    questao.descricao = map['question'];
-    questao.alternativaA = map['answerA'];
-    questao.alternativaB = map['answerB'];
-    questao.alternativaC = map['answerC'];
-    questao.alternativaD = map['answerD'];
-    questao.alternativaE = map['answerE'];
-    questao.respostaCorreta = map['correctAnswer'];
+    questao.categoria = map['categoria'];
+    questao.imagem = map['imagem'];
+    questao.descricao = map['descricao'];
+    questao.alternativaA = map['alternativa_A'];
+    questao.alternativaB = map['alternativa_B'];
+    questao.alternativaC = map['alternativa_C'];
+    questao.alternativaD = map['alternativa_D'];
+    questao.alternativaE = map['alternativa_E'];
+    questao.respostaCorreta = map['alternativa_correta'];
     return questao;
   }
   List<Questao> toModelList(List<Map> map){
@@ -54,16 +61,15 @@ class QuestaoDAO extends AbstractDAO<Questao>{
   Map toMap(Questao model){
     return {
       "id": model.id,
-      "type": model.tipo,
-      "category": model.categoria,
-      "image": model.imagem,
-      "question":model.descricao,
-      "answerA":model.alternativaA,
-      "answerB":model.alternativaB,
-      "answerC":model.alternativaC,
-      "answerD":model.alternativaD,
-      "answerE":model.alternativaE,
-      "correctAnswer":model.respostaCorreta
+      "categoria": model.categoria,
+      "imagem": model.imagem,
+      "descricao":model.descricao,
+      "alternativa_A":model.alternativaA,
+      "alternativa_B":model.alternativaB,
+      "alternativa_C":model.alternativaC,
+      "alternativa_D":model.alternativaD,
+      "alternativa_E":model.alternativaE,
+      "alternativa_correta":model.respostaCorreta
     };
   }
 }

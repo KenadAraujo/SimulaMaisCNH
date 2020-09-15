@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simulamaiscnh/api/questoes_api.dart';
 import 'package:simulamaiscnh/dao/questao_dao.dart';
 import 'package:simulamaiscnh/utils/icons.dart';
 
@@ -11,6 +12,8 @@ class _HomeViewState extends State<HomeView> {
   
   void buscarTodosAsQuestoes() async{
     QuestaoDAO questaoDAO = new QuestaoDAO();
+    QuestoesAPI questoesAPI = new QuestoesAPI();
+    questoesAPI.get(questoesAPI.gerarUrlDasQuestoes(1), Map<dynamic,dynamic>());
     print(await questaoDAO.findAll());
   }
   

@@ -1,5 +1,4 @@
 abstract class AbstractDAO<T>{
-
   Future<void> save(T modelo);
   Future<void> update(T modelo);
   Future<void> delete(T modelo);

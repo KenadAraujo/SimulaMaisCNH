@@ -1,6 +1,5 @@
 class Questao{
   int id;
-  String tipo;
   String categoria;
   String imagem;
   String descricao;
