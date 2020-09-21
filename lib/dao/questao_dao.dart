@@ -11,6 +11,11 @@ class QuestaoDAO extends AbstractDAO<Questao>{
     Database database = await DAO.instance.database;
     await database.insert(tableName, toMap(modelo));
   }
+  Future<void> saveList(List<Questao> questoes){
+    questoes.forEach((questao) {
+      save(questao);
+    });
+  }
   Future<void> update(Questao modelo) async{
     Database database = await DAO.instance.database;
     await database.update(tableName, toMap(modelo),where: "id = ?",whereArgs: [modelo.id]);
@@ -36,6 +41,18 @@ class QuestaoDAO extends AbstractDAO<Questao>{
       return new List();
     }
   }
+  Future<int> quantidadeQuestoesNoBanco() async{
+    Database database = await DAO.instance.database;
+    List<Map> map = await database.rawQuery("SELECT COUNT(id) as 'qnt_questoes' FROM ${tableName}");
+    if(map.isNotEmpty){
+      //print(map[0]["atual_em_caixa"]);
+      if(map[0] == null){
+        return 0;
+      }
+      return map[0]["qnt_questoes"].toInt();
+    }
+    return 0;
+  }
 
   Questao toModel(Map map){
     Questao questao = new Questao();
@@ -58,7 +75,7 @@ class QuestaoDAO extends AbstractDAO<Questao>{
     });
     return questoes;
   }
-  Map toMap(Questao model){
+  Map<String,dynamic> toMap(Questao model){
     return {
       "id": model.id,
       "categoria": model.categoria,
