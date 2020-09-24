@@ -26,6 +26,7 @@ class _SplashViewState extends State<SplashView> {
       }else{
         this.setState(() {
           _status = "${value.length} questões adicionadas";
+          Navigator.pushNamed(context, '/home');
         })
       }  
     });
@@ -53,6 +54,7 @@ class _SplashViewState extends State<SplashView> {
       setState(() {
         _status = "${quantidadeQuestoesAdicionadas} questões adicionadas";
       });
+      Navigator.pushNamed(context, '/home');
     }
   }
 
@@ -78,7 +80,13 @@ class _SplashViewState extends State<SplashView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text(this._status)
+                  Text(
+                    this._status,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                  )
                 ],),
               ],
           )

@@ -9,4 +9,8 @@ class Questao{
   String alternativaD;
   String alternativaE;
   String respostaCorreta;
+
+  String toString(){
+    return "${id}:${categoria}:${descricao}";
+  }
 }

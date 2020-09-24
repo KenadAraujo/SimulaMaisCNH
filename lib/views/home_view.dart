@@ -10,12 +10,21 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   
-  void buscarTodosAsQuestoes() async{
+  void irParaCategorias(){
+    Navigator.pushNamed(context, '/categorias');
   }
-  
+  void irParaSimulados(){
+
+  }
+  void irParaProgressoDoUsuario(){
+
+  }
+  void irParaPlacas(){
+
+  }
+
   @override
   Widget build(BuildContext context) {
-    buscarTodosAsQuestoes();
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -30,18 +39,37 @@ class _HomeViewState extends State<HomeView> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Image.asset('assets/imagens/questoes.png'),
-                Image.asset('assets/imagens/simulados.png')
+                new IconButton(
+                    icon:Image.asset('assets/imagens/questoes.png'),
+                    tooltip: 'Questões',
+                    onPressed: irParaCategorias,
+                    iconSize: 160.0,
+                ),
+                new IconButton(
+                    icon:Image.asset('assets/imagens/simulados.png'),
+                    tooltip: 'Simulados',
+                    onPressed: irParaSimulados,
+                    iconSize: 160.0,
+                ),
               ],),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Image.asset('assets/imagens/progresso.png'),
-                Image.asset('assets/imagens/placas.png')
-              ],)
-          ],
-        ),
+                new IconButton(
+                    icon:Image.asset('assets/imagens/progresso.png'),
+                    tooltip: 'Progresso',
+                    onPressed: irParaProgressoDoUsuario,
+                    iconSize: 160.0,
+                ),
+                new IconButton(
+                    icon:Image.asset('assets/imagens/placas.png'),
+                    tooltip: 'Placas',
+                    onPressed: irParaPlacas,
+                    iconSize: 160.0,
+                ),
+              ],),
+          ],),
       )
     );
   }

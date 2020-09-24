@@ -53,7 +53,18 @@ class QuestaoDAO extends AbstractDAO<Questao>{
     }
     return 0;
   }
-
+  Future<List<String>> getCategorias() async{
+    List<String> categorias = List();
+    Database database = await DAO.instance.database;
+    List<Map> map = await database.rawQuery("SELECT DISTINCT(categoria) as 'categoria' FROM ${tableName}");
+    if(map.isNotEmpty){
+      map.forEach((element) {
+        //print(element['categoria']);
+        categorias.add(element['categoria']);
+      });
+    }
+    return categorias;
+  }
   Questao toModel(Map map){
     Questao questao = new Questao();
     questao.id = map['id'];
