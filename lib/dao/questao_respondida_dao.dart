@@ -41,7 +41,7 @@ class QuestaoRespondidaDAO extends AbstractDAO<QuestaoRespondida>{
 
   QuestaoRespondida toModel(Map map){
     Questao questao = Questao();
-    questao.id = map["questao_id"];
+    questao.setId(map["questao_id"]);
     
     QuestaoRespondida questaoRespondida = QuestaoRespondida();
     questaoRespondida.id = map["id"];
@@ -62,7 +62,7 @@ class QuestaoRespondidaDAO extends AbstractDAO<QuestaoRespondida>{
   Map toMap(QuestaoRespondida model){
     return {
       "id": model.id,
-      "questao_id":model.questao.id,
+      "questao_id":model.questao.getId(),
       "alternativa_respondida":model.alternativaRespondida,
       "alternativa_correta":model.alternativaCorreta,
       "data_resposta":model.dataResposta,

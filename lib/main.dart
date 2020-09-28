@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simulamaiscnh/views/categoria_view.dart';
 import 'package:simulamaiscnh/views/home_view.dart';
+import 'package:simulamaiscnh/views/questao_view.dart';
 import 'package:simulamaiscnh/views/splash_view.dart';
 
 void main() {
@@ -10,7 +11,8 @@ void main() {
     routes: {
       '/splash-view':(context) => SplashView(),
       '/home':(context) => HomeView(),
-      '/categorias':(context) => CategoriaView()
+      '/categorias':(context) => CategoriaView(),
+      '/questao':(context) => QuestaoView()
     })
   );
 }

@@ -1,42 +1,33 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:simulamaiscnh/dao/questao_dao.dart';
-import 'package:simulamaiscnh/views/questao_view.dart';
+import 'package:simulamaiscnh/models/questao.dart';
 
-class CategoriasList extends StatefulWidget {
+class AlternativaList extends StatefulWidget {
+
+  final Questao questao;
+  AlternativaList({Key key, @required this.questao}) : super(key: key);
+
   @override
-  _CategoriasListState createState() => _CategoriasListState();
+  _AlternativaListState createState() => _AlternativaListState(questao.gerarAlternativas());
 }
 
-class _CategoriasListState extends State<CategoriasList> {
+class _AlternativaListState extends State<AlternativaList> {
 
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
-  List<String> _categorias = List();
-  
-  @override
-  void initState() {
-    super.initState();
+  Map<String,String> alternativas = Map();
 
-    QuestaoDAO questaoDAO = QuestaoDAO();
-    questaoDAO.getCategorias().then((list) {
-      setState(() {
-        _categorias = list;
-      });
-    });
-  }
+  _AlternativaListState(Map<String,String> alt){  this.alternativas = alt; }
 
   @override
   Widget build(BuildContext context) {
     var larguraDoCard = MediaQuery.of(context).size.width*0.8;
     return ListView.builder(
-      padding: const EdgeInsets.all(8),
-      itemCount: this._categorias.length,
+      itemCount: this.alternativas.length,
       itemBuilder: (BuildContext context, int index) {
+        String key = this.alternativas.keys.elementAt(index);
         return GestureDetector(
           child: Card(
             elevation: 2,
-
             child: ClipPath(
               child: Container(
                 width: larguraDoCard,
@@ -50,7 +41,7 @@ class _CategoriasListState extends State<CategoriasList> {
                   color: Colors.yellow
                 ),
                 child: Text(
-                  _categorias[index].toUpperCase(),
+                  this.alternativas[key].toUpperCase(),
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -63,16 +54,8 @@ class _CategoriasListState extends State<CategoriasList> {
                   borderRadius: BorderRadius.circular(5))),
                 ),
           ),
-          onTap: ()=>{
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => QuestaoView(categoria: _categorias[index],)
-              ))
-          },
         );
       }
     );
   }
-  Future refresh() async{ }
 }

@@ -1,16 +1,96 @@
 class Questao{
-  int id;
-  String categoria;
-  String imagem;
-  String descricao;
-  String alternativaA;
-  String alternativaB;
-  String alternativaC;
-  String alternativaD;
-  String alternativaE;
-  String respostaCorreta;
+  int _id;
+  String _categoria;
+  String _imagem;
+  String _descricao;
+  String _alternativaA;
+  String _alternativaB;
+  String _alternativaC;
+  String _alternativaD;
+  String _alternativaE;
+  String _respostaCorreta;
+
+  int getId(){
+    return this._id;
+  }
+  void setId(int id){
+    this._id = id;
+  }
+
+  String getCategoria(){
+    return this._categoria;
+  }
+  void setCategoria(String categoria){
+    this._categoria = categoria;
+  }
+  
+  String getImagem(){
+    return this._imagem;
+  }
+  void setImagem(String imagem){
+    this._imagem = imagem;
+  }
+
+  String getDescricao(){
+    return this._descricao;
+  }
+  void setDescricao(String descricao){
+    this._descricao = descricao;
+  }
+
+  String getAlternativaA(){
+    return this._alternativaA;
+  }
+  void setAlternativaA(String alternativaA){
+    this._alternativaA = alternativaA;
+  }
+
+  String getAlternativaB(){
+    return this._alternativaB;
+  }
+  void setAlternativaB(String alternativaB){
+    this._alternativaB = alternativaB;
+  }
+
+  String getAlternativaC(){
+    return this._alternativaC;
+  }
+  void setAlternativaC(String alternativaC){
+    this._alternativaC = alternativaC;
+  }
+
+  String getAlternativaD(){
+    return this._alternativaD;
+  }
+  void setAlternativaD(String alternativaD){
+    this._alternativaD = alternativaD;
+  }
+
+  String getAlternativaE(){
+    return this._alternativaE;
+  }
+  void setAlternativaE(String alternativaE){
+    this._alternativaE = alternativaE;
+  }
+
+  String getRespostaCorreta(){
+    return this._respostaCorreta;
+  }
+  void setRespostaCorreta(String respostaCorreta){
+    this._respostaCorreta = respostaCorreta;
+  }
 
   String toString(){
-    return "${id}:${categoria}:${descricao}";
+    return "${_id}:${_categoria}:${_descricao}";
+  }
+
+  Map<String,String> gerarAlternativas(){
+    return {
+      "A":this._alternativaA,
+      "B":this._alternativaB,
+      "C":this._alternativaC,
+      "D":this._alternativaD,
+      "E":this._alternativaE
+    };
   }
 }

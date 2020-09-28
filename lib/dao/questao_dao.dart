@@ -18,11 +18,11 @@ class QuestaoDAO extends AbstractDAO<Questao>{
   }
   Future<void> update(Questao modelo) async{
     Database database = await DAO.instance.database;
-    await database.update(tableName, toMap(modelo),where: "id = ?",whereArgs: [modelo.id]);
+    await database.update(tableName, toMap(modelo),where: "id = ?",whereArgs: [modelo.getId()]);
   }
   Future<void> delete(Questao modelo) async{
     Database database = await DAO.instance.database;
-    await database.delete(tableName,where: "id = ?",whereArgs: [modelo.id]);
+    await database.delete(tableName,where: "id = ?",whereArgs: [modelo.getId()]);
   }
   Future<Questao> find(int id) async{
     Database database = await DAO.instance.database;
@@ -31,6 +31,16 @@ class QuestaoDAO extends AbstractDAO<Questao>{
       return toModel(map[0]);
     }
     return null;
+  }
+  Future<Questao> buscarQuestaoNaoRespondida(String categoria) async{
+    Database database = await DAO.instance.database;
+    List<Map> map = await database.rawQuery("select q.* from ${tableName} q where q.categoria = ? and q.id not in (select id from resposta_questao where categoria = ?) LIMIT 1",[categoria,categoria]);
+    if(map.isNotEmpty){
+      print(map[0]);
+      if(map[0] != null){
+        return toModel(map[0]);
+      }
+    }
   }
   Future<List<Questao>> findAll() async{
     Database database = await DAO.instance.database;
@@ -67,16 +77,16 @@ class QuestaoDAO extends AbstractDAO<Questao>{
   }
   Questao toModel(Map map){
     Questao questao = new Questao();
-    questao.id = map['id'];
-    questao.categoria = map['categoria'];
-    questao.imagem = map['imagem'];
-    questao.descricao = map['descricao'];
-    questao.alternativaA = map['alternativa_A'];
-    questao.alternativaB = map['alternativa_B'];
-    questao.alternativaC = map['alternativa_C'];
-    questao.alternativaD = map['alternativa_D'];
-    questao.alternativaE = map['alternativa_E'];
-    questao.respostaCorreta = map['alternativa_correta'];
+    questao.setId(map['id']);
+    questao.setCategoria(map['categoria']);
+    questao.setImagem(map['imagem']);
+    questao.setDescricao(map['descricao']);
+    questao.setAlternativaA(map['alternativa_A']);
+    questao.setAlternativaB(map['alternativa_B']);
+    questao.setAlternativaC(map['alternativa_C']);
+    questao.setAlternativaD(map['alternativa_D']);
+    questao.setAlternativaE(map['alternativa_E']);
+    questao.setRespostaCorreta(map['alternativa_correta']);
     return questao;
   }
   List<Questao> toModelList(List<Map> map){
@@ -88,16 +98,16 @@ class QuestaoDAO extends AbstractDAO<Questao>{
   }
   Map<String,dynamic> toMap(Questao model){
     return {
-      "id": model.id,
-      "categoria": model.categoria,
-      "imagem": model.imagem,
-      "descricao":model.descricao,
-      "alternativa_A":model.alternativaA,
-      "alternativa_B":model.alternativaB,
-      "alternativa_C":model.alternativaC,
-      "alternativa_D":model.alternativaD,
-      "alternativa_E":model.alternativaE,
-      "alternativa_correta":model.respostaCorreta
+      "id": model.getId(),
+      "categoria": model.getCategoria(),
+      "imagem": model.getImagem(),
+      "descricao":model.getDescricao(),
+      "alternativa_A":model.getAlternativaA(),
+      "alternativa_B":model.getAlternativaB(),
+      "alternativa_C":model.getAlternativaC(),
+      "alternativa_D":model.getAlternativaD(),
+      "alternativa_E":model.getAlternativaE(),
+      "alternativa_correta":model.getRespostaCorreta()
     };
   }
 }

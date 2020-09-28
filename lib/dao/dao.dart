@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 
 class DAO{
 
-  static final String _databaseName = "simula_mais.db";
+  static final String _databaseName = "simula.db";
   static final int _databaseVersion = 1;
 
   DAO._privateContructor();
@@ -42,16 +42,29 @@ class DAO{
         alternativa_D       VARCHAR (500),
         alternativa_E       VARCHAR (500),
         alternativa_correta VARCHAR (2) 
-    )''');
-    await db.execute('''
-    CREATE TABLE resposta_questao (
+    );''');
+    print("TABELA questao CRIADA!");
+    await db.execute(''' CREATE TABLE resposta_questao (
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
         questao_id             BIGINT        NOT NULL,
         alternativa_respondida VARCHAR (2),
         alternativa_correta    VARCHAR (2),
         data_resposta          DATETIME,
         categoria_da_questao   VARCHAR (200) 
-    )''');
+    );''');
+    print("TABELA resposta_questao CRIADA!");
   }
-
+  Future _onUpgrade(Database db,int oldVersion, int newVersion) async{
+    if(newVersion==2){
+      await db.execute(''' CREATE TABLE IF NOT EXISTS resposta_questao (
+          id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
+          questao_id             BIGINT        NOT NULL,
+          alternativa_respondida VARCHAR (2),
+          alternativa_correta    VARCHAR (2),
+          data_resposta          DATETIME,
+          categoria_da_questao   VARCHAR (200) 
+      );''');
+      print("TABELA resposta_questao CRIADA!");
+    }
+  }
 }

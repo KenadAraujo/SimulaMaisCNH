@@ -27,17 +27,17 @@ class QuestaoAPI{
     List<Questao> questoesModel = List();
     questoes.forEach((questao) {
       Questao q = Questao();
-      q.id = questao['id'];
+      q.setId(questao['id']);
       //print(q.id);
-      q.categoria = questao['categoria'];
-      q.descricao = questao['descricao'];
-      q.imagem = questao['imagem'];
-      q.alternativaA = questao['alternativaA'];
-      q.alternativaB = questao['alternativaB'];
-      q.alternativaC = questao['alternativaC'];
-      q.alternativaD = questao['alternativaD'];
-      q.alternativaE = questao['alternativaE'];
-      q.respostaCorreta = questao['alternativaCorreta'];
+      q.setCategoria(questao['categoria']);
+      q.setDescricao(questao['descricao']);
+      q.setImagem(questao['imagem']);
+      q.setAlternativaA(questao['alternativaA']);
+      q.setAlternativaB(questao['alternativaB']);
+      q.setAlternativaC(questao['alternativaC']);
+      q.setAlternativaD(questao['alternativaD']);
+      q.setAlternativaE(questao['alternativaE']);
+      q.setRespostaCorreta(questao['alternativaCorreta']);
       //print(q.toString());
       questoesModel.add(q);
     });
