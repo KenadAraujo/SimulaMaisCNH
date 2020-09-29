@@ -4,10 +4,10 @@ Esse é um projeto com o objetivo de criar um simulador de questões para a aval
 
 ## Tarefas
 
-*Consumir a API com as questões e salvar no banco local (Feito)
-*Listar todas as disciplinas das questões ao escolher a modalidade "Questões" (Feito)
-*Exibir uma questão para ser respondida (Feito)
-*Responder uma questão (Em desenvolvimento)
-*Criar a modalidade "Simulado" (Em desenvolvimento)
-*Criar a modalidade "Progresso" (Em desenvolvimento)
-*Criar a modalidade "Placas" (Em desenvolvimento)
+* Consumir a API com as questões e salvar no banco local (Feito)
+* Listar todas as disciplinas das questões ao escolher a modalidade "Questões" (Feito)
+* Exibir uma questão para ser respondida (Feito)
+* Responder uma questão (Em desenvolvimento)
+* Criar a modalidade "Simulado" (Em desenvolvimento)
+* Criar a modalidade "Progresso" (Em desenvolvimento)
+* Criar a modalidade "Placas" (Em desenvolvimento)
