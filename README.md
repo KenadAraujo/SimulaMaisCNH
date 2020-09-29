@@ -1,16 +1,13 @@
-# simulamaiscnh
+# Simula Mais CNH
 
-A new Flutter project.
+Esse é um projeto com o objetivo de criar um simulador de questões para a avaliação teórica do Dentran de diversos estados. Esse app será escrito em Flutter e ainda não está públicado na Google Play
 
-## Getting Started
+## Tarefas
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+*Consumir a API com as questões e salvar no banco local (Feito)
+*Listar todas as disciplinas das questões ao escolher a modalidade "Questões" (Feito)
+*Exibir uma questão para ser respondida (Feito)
+*Responder uma questão (Em desenvolvimento)
+*Criar a modalidade "Simulado" (Em desenvolvimento)
+*Criar a modalidade "Progresso" (Em desenvolvimento)
+*Criar a modalidade "Placas" (Em desenvolvimento)
