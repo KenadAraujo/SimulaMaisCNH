@@ -67,7 +67,7 @@ class _CategoriasListState extends State<CategoriasList> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => QuestaoView(categoria: _categorias[index],)
+                builder: (context) => QuestaoView(categoria: _categorias[index])
               ))
           },
         );

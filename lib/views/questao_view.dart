@@ -7,11 +7,14 @@ import 'package:simulamaiscnh/views/components/lists/categorias_lists.dart';
 class QuestaoView extends StatefulWidget {
   
   final String categoria;
+  int numeroQuestao = 1;
 
   QuestaoView({Key key, @required this.categoria}) : super(key: key);
 
+  QuestaoView.criaEPegaAProximaQuestao({Key key,@required this.categoria,@required this.numeroQuestao}):super(key:key);
+
   @override
-  _QuestaoViewState createState() => _QuestaoViewState(categoria);
+  _QuestaoViewState createState() => _QuestaoViewState(categoria,numeroQuestao);
 }
 
 class _QuestaoViewState extends State<QuestaoView> {
@@ -21,13 +24,16 @@ class _QuestaoViewState extends State<QuestaoView> {
   Questao _questaoAtual = Questao();
 
   String cat;
-  
-  _QuestaoViewState(String cat){  this.cat = cat; }
+  int numeroQuestao;
+  _QuestaoViewState(String cat,int numeroQuestao){  
+    this.cat = cat; 
+    this.numeroQuestao = numeroQuestao;  
+  }
 
   @override
   void initState() {
     super.initState();
-    questaoDAO.buscarQuestaoNaoRespondida(this.cat).then((questao) => {
+    questaoDAO.buscarQuestaoNaoRespondida(this.cat,this.numeroQuestao).then((questao) => {
       this.setState(() {
         if(questao!=null){
           this._questaoAtual = questao;
@@ -52,16 +58,23 @@ class _QuestaoViewState extends State<QuestaoView> {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
+                SizedBox(height: 10),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text("Q${_questaoAtual.getId().toString()}",
                           style: TextStyle(
                               fontSize: 24,
                               color: Colors.black,
                               fontWeight: FontWeight.bold)),
+                    Text(this.cat,
+                          style: TextStyle(
+                              fontSize: 24,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold)),
                   ],),
+                SizedBox(height: 10),
                 Row(children: [
                   Expanded(
                     child: Text(_questaoAtual.getDescricao(), 
@@ -75,11 +88,103 @@ class _QuestaoViewState extends State<QuestaoView> {
                   child: SizedBox(
                     height: altura,
                     child:AlternativaList(questao: this._questaoAtual))
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    botaoAnterior(),
+                    Material(
+                      color: Colors.transparent,
+                      child: Center(
+                        child: Ink(
+                           decoration: BoxDecoration(
+                              border: Border(
+                                right: BorderSide(color: Colors.black, width: 5),
+                                left: BorderSide(color: Colors.black, width: 5),
+                                top: BorderSide(color: Colors.black, width: 5),
+                                bottom: BorderSide(color: Colors.black, width: 5),),
+                              color: Colors.yellow
+                          ),
+                          child: IconButton(
+                            icon: Icon(Icons.home),
+                            iconSize: 34,
+                            color: Colors.black,
+                            onPressed: home,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Material(
+                      color: Colors.transparent,
+                      child: Center(
+                        child: Ink(
+                           decoration: BoxDecoration(
+                              border: Border(
+                                right: BorderSide(color: Colors.black, width: 5),
+                                left: BorderSide(color: Colors.black, width: 5),
+                                top: BorderSide(color: Colors.black, width: 5),
+                                bottom: BorderSide(color: Colors.black, width: 5),),
+                              color: Colors.yellow
+                          ),
+                          child: IconButton(
+                            icon: Icon(Icons.navigate_next),
+                            iconSize: 34,
+                            color: Colors.black,
+                            onPressed: screenPosterior,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ]
                 )
                 ],
             )
           ,)
         )
       );
+  }
+  
+  void screenAnterior(){
+    if(this.numeroQuestao>1){
+      Navigator.pop(context);  
+    }
+  }
+  void home(){
+    Navigator.pushNamed(context, '/home');
+  }
+  void screenPosterior(){
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => QuestaoView.criaEPegaAProximaQuestao(categoria: this.cat, numeroQuestao: this.numeroQuestao+1)
+    ));
+  }
+  Widget botaoAnterior(){
+    if(this.numeroQuestao!=1){
+      return Material(
+              color: Colors.transparent,
+              child: Center(
+                child: Ink(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        right: BorderSide(color: Colors.black, width: 5),
+                        left: BorderSide(color: Colors.black, width: 5),
+                        top: BorderSide(color: Colors.black, width: 5),
+                        bottom: BorderSide(color: Colors.black, width: 5),),
+                      color: Colors.yellow
+                  ),
+                  child: IconButton(
+                    disabledColor: Colors.grey,
+                    icon: Icon(Icons.navigate_before),
+                    iconSize: 34,
+                    color: Colors.black,
+                    onPressed: screenAnterior,
+                  ),
+                ),
+              ),
+            );
+    }
+    return null;
   }
 }

@@ -32,13 +32,12 @@ class QuestaoDAO extends AbstractDAO<Questao>{
     }
     return null;
   }
-  Future<Questao> buscarQuestaoNaoRespondida(String categoria) async{
+  Future<Questao> buscarQuestaoNaoRespondida(String categoria,int posicao) async{
     Database database = await DAO.instance.database;
-    List<Map> map = await database.rawQuery("select q.* from ${tableName} q where q.categoria = ? and q.id not in (select id from resposta_questao where categoria = ?) LIMIT 1",[categoria,categoria]);
+    List<Map> map = await database.rawQuery("select q.* from ${tableName} q where q.categoria = ? and q.id not in (select id from resposta_questao where categoria = ?) LIMIT ?",[categoria,categoria,posicao]);
     if(map.isNotEmpty){
-      print(map[0]);
-      if(map[0] != null){
-        return toModel(map[0]);
+      if(map[posicao-1] != null){
+        return toModel(map[posicao-1]);
       }
     }
   }

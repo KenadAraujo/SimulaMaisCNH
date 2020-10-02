@@ -9,14 +9,26 @@ class AlternativaList extends StatefulWidget {
   AlternativaList({Key key, @required this.questao}) : super(key: key);
 
   @override
-  _AlternativaListState createState() => _AlternativaListState(questao.gerarAlternativas());
+  _AlternativaListState createState() => _AlternativaListState(questao);
 }
 
 class _AlternativaListState extends State<AlternativaList> {
 
-  Map<String,String> alternativas = Map();
+  Questao questao;
 
-  _AlternativaListState(Map<String,String> alt){  this.alternativas = alt; }
+  Map<String,String> alternativas = Map();
+  Map<String,Color> cores = Map();
+
+  String questaoRespondida;
+
+  _AlternativaListState(Questao questao){ 
+    this.questao = questao;
+    this.alternativas = questao.gerarAlternativas();
+
+    this.alternativas.forEach((key, value) {
+      cores[key] = Colors.yellow;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +38,10 @@ class _AlternativaListState extends State<AlternativaList> {
       itemBuilder: (BuildContext context, int index) {
         String key = this.alternativas.keys.elementAt(index);
         return GestureDetector(
+          onTap: (){
+            this.questaoRespondida = key;
+            responderQuestao(key);
+          } ,
           child: Card(
             elevation: 2,
             child: ClipPath(
@@ -38,7 +54,7 @@ class _AlternativaListState extends State<AlternativaList> {
                     left: BorderSide(color: Colors.black, width: 5),
                     top: BorderSide(color: Colors.black, width: 5),
                     bottom: BorderSide(color: Colors.black, width: 5),),
-                  color: Colors.yellow
+                  color: this.cores[key]
                 ),
                 child: Text(
                   this.alternativas[key].toUpperCase(),
@@ -57,5 +73,16 @@ class _AlternativaListState extends State<AlternativaList> {
         );
       }
     );
+  }
+  void responderQuestao(String key){
+    if(key!=null){
+      setState(() {
+        if(Questao.responderQuestao(questao, key)){
+          this.cores[key] = Colors.green;
+        }else{
+          this.cores[key] = Colors.red;
+        }
+      });
+    }
   }
 }

@@ -93,4 +93,16 @@ class Questao{
       "E":this._alternativaE
     };
   }
+
+  static bool responderQuestao(Questao questao,String alternativaRespondida){
+    if(questao!=null){
+      if(questao.getRespostaCorreta()==alternativaRespondida){
+        //print("Alternativa correta");
+        return true;
+      }else{
+        //print("Alternativa errada");
+        return false;
+      }
+    }
+  }
 }
