@@ -24,7 +24,6 @@ class _QuestaoViewState extends State<QuestaoView> {
   var altura;
 
   _QuestaoViewState(String cat,int numeroQuestao){  
-    print("QUE?");
     this.cat = cat; 
     this.numeroQuestao = numeroQuestao;  
   }
