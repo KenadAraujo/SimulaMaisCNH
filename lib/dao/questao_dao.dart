@@ -35,13 +35,26 @@ class QuestaoDAO extends AbstractDAO<Questao>{
   Future<Questao> buscarQuestaoNaoRespondida(String categoria,int posicao) async{
     Database database = await DAO.instance.database;
     List<Map> map = await database.rawQuery("select q.* from ${tableName} q where q.categoria = ? and q.id not in (select questao_id from resposta_questao where categoria = ? and alternativa_respondida = alternativa_correta) LIMIT ?",[categoria,categoria,posicao]);
+    if(posicao>map.length){
+      posicao = map.length;
+    }
     if(map.length>0){
       if(map[posicao-1] != null){
-        //print(map[posicao-1]);
         return toModel(map[posicao-1]);
       }
     }
     return null;
+  }
+  Future<int> quantidadeQuestoesNaoResolvidas(String categoria) async{
+    Database database = await DAO.instance.database;
+    List<Map> map = await database.rawQuery("select COUNT(q.id) as 'qnt_questoes' from ${tableName} q where q.categoria = ? and q.id not in (select questao_id from resposta_questao where categoria = ? and alternativa_respondida = alternativa_correta)",[categoria,categoria]);
+    if(map.isNotEmpty){
+      if(map[0] == null){
+        return 0;
+      }
+      return map[0]["qnt_questoes"].toInt();
+    }
+    return 0;
   }
   Future<List<Questao>> findAll() async{
     Database database = await DAO.instance.database;

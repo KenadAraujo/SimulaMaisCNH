@@ -39,10 +39,14 @@ class _QuestaoViewState extends State<QuestaoView> {
         }
       })
     });
-    questaoDAO.buscarQuestaoNaoRespondida(this.cat, this.numeroQuestao+1).then((questao)=>{
-      if(questao!=null && this._questaoAtual.getId()!=questao.getId()){
-        setState((){
-          this.existeProxima = true;
+    questaoDAO.quantidadeQuestoesNaoResolvidas(this.cat).then((qntQuestoes) => {
+      if(qntQuestoes!=this.numeroQuestao){
+        questaoDAO.buscarQuestaoNaoRespondida(this.cat, this.numeroQuestao+1).then((questao)=>{
+          if(questao!=null && this._questaoAtual.getId()!=questao.getId()){
+            setState((){
+              this.existeProxima = true;
+            })
+          }
         })
       }
     });
