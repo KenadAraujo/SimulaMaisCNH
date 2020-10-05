@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:simulamaiscnh/dao/questao_respondida_dao.dart';
 import 'package:simulamaiscnh/models/questao.dart';
+import 'package:simulamaiscnh/models/questao_respondida.dart';
 
 class AlternativaList extends StatefulWidget {
 
@@ -23,6 +25,7 @@ class _AlternativaListState extends State<AlternativaList> {
 
   _AlternativaListState(Questao questao){ 
     this.questao = questao;
+    print(this.questao.toString());
     this.alternativas = questao.gerarAlternativas();
 
     this.alternativas.forEach((key, value) {
@@ -35,6 +38,8 @@ class _AlternativaListState extends State<AlternativaList> {
     var larguraDoCard = MediaQuery.of(context).size.width*0.8;
     return ListView.builder(
       itemCount: this.alternativas.length,
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
         String key = this.alternativas.keys.elementAt(index);
         return GestureDetector(
@@ -78,10 +83,15 @@ class _AlternativaListState extends State<AlternativaList> {
     if(key!=null){
       setState(() {
         if(Questao.responderQuestao(questao, key)){
+          //RESPONDIDA CORRETA
           this.cores[key] = Colors.green;
         }else{
+          //RESPONDIDA ERRADA
           this.cores[key] = Colors.red;
         }
+        QuestaoRespondidaDAO questaoRespondidaDAO = QuestaoRespondidaDAO();
+        QuestaoRespondida qRespondida = QuestaoRespondida.build(questao, key);
+        questaoRespondidaDAO.save(qRespondida);
       });
     }
   }

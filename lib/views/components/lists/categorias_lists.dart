@@ -11,7 +11,6 @@ class CategoriasList extends StatefulWidget {
 
 class _CategoriasListState extends State<CategoriasList> {
 
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
   List<String> _categorias = List();
   
   @override
@@ -21,7 +20,7 @@ class _CategoriasListState extends State<CategoriasList> {
     QuestaoDAO questaoDAO = QuestaoDAO();
     questaoDAO.getCategorias().then((list) {
       setState(() {
-        _categorias = list;
+        this._categorias = list;
       });
     });
   }
@@ -36,7 +35,6 @@ class _CategoriasListState extends State<CategoriasList> {
         return GestureDetector(
           child: Card(
             elevation: 2,
-
             child: ClipPath(
               child: Container(
                 width: larguraDoCard,
@@ -67,12 +65,11 @@ class _CategoriasListState extends State<CategoriasList> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => QuestaoView(categoria: _categorias[index])
+                builder: (context) => QuestaoView(categoria: this._categorias[index])
               ))
           },
         );
       }
     );
   }
-  Future refresh() async{ }
 }

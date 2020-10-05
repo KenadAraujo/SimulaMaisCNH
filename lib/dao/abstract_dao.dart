@@ -7,5 +7,5 @@ abstract class AbstractDAO<T>{
 
   T toModel(Map map);
   List<T> toModelList(List<Map> map);
-  Map toMap(T model);
+  Map<String,dynamic> toMap(T model);
 }

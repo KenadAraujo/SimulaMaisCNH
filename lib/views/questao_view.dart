@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:simulamaiscnh/dao/questao_dao.dart';
 import 'package:simulamaiscnh/models/questao.dart';
 import 'package:simulamaiscnh/views/components/lists/alternativa_lists.dart';
-import 'package:simulamaiscnh/views/components/lists/categorias_lists.dart';
 
 class QuestaoView extends StatefulWidget {
   
   final String categoria;
   int numeroQuestao = 1;
-
   QuestaoView({Key key, @required this.categoria}) : super(key: key);
 
   QuestaoView.criaEPegaAProximaQuestao({Key key,@required this.categoria,@required this.numeroQuestao}):super(key:key);
@@ -18,14 +16,15 @@ class QuestaoView extends StatefulWidget {
 }
 
 class _QuestaoViewState extends State<QuestaoView> {
-  
-  QuestaoDAO questaoDAO = QuestaoDAO();
-
   Questao _questaoAtual = Questao();
 
   String cat;
   int numeroQuestao;
+  bool existeProxima = false;
+  var altura;
+
   _QuestaoViewState(String cat,int numeroQuestao){  
+    print("QUE?");
     this.cat = cat; 
     this.numeroQuestao = numeroQuestao;  
   }
@@ -33,6 +32,7 @@ class _QuestaoViewState extends State<QuestaoView> {
   @override
   void initState() {
     super.initState();
+    QuestaoDAO questaoDAO = QuestaoDAO();
     questaoDAO.buscarQuestaoNaoRespondida(this.cat,this.numeroQuestao).then((questao) => {
       this.setState(() {
         if(questao!=null){
@@ -40,11 +40,18 @@ class _QuestaoViewState extends State<QuestaoView> {
         }
       })
     });
+    questaoDAO.buscarQuestaoNaoRespondida(this.cat, this.numeroQuestao+1).then((questao)=>{
+      if(questao!=null && this._questaoAtual.getId()!=questao.getId()){
+        setState((){
+          this.existeProxima = true;
+        })
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    var altura = MediaQuery.of(context).size.height*0.9;
+    this.altura = MediaQuery.of(context).size.height*0.6;
     return Scaffold(
         body: Container(
           decoration: BoxDecoration(
@@ -58,37 +65,7 @@ class _QuestaoViewState extends State<QuestaoView> {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                SizedBox(height: 10),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text("Q${_questaoAtual.getId().toString()}",
-                          style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold)),
-                    Text(this.cat,
-                          style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold)),
-                  ],),
-                SizedBox(height: 10),
-                Row(children: [
-                  Expanded(
-                    child: Text(_questaoAtual.getDescricao(), 
-                      maxLines: 15,
-                      style: TextStyle(fontSize: 20,fontWeight: FontWeight.w300),
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.justify,),
-                  ),
-                ],),
-                Expanded(
-                  child: SizedBox(
-                    height: altura,
-                    child:AlternativaList(questao: this._questaoAtual))
-                ),
+                questao(),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -115,27 +92,7 @@ class _QuestaoViewState extends State<QuestaoView> {
                         ),
                       ),
                     ),
-                    Material(
-                      color: Colors.transparent,
-                      child: Center(
-                        child: Ink(
-                           decoration: BoxDecoration(
-                              border: Border(
-                                right: BorderSide(color: Colors.black, width: 5),
-                                left: BorderSide(color: Colors.black, width: 5),
-                                top: BorderSide(color: Colors.black, width: 5),
-                                bottom: BorderSide(color: Colors.black, width: 5),),
-                              color: Colors.yellow
-                          ),
-                          child: IconButton(
-                            icon: Icon(Icons.navigate_next),
-                            iconSize: 34,
-                            color: Colors.black,
-                            onPressed: screenPosterior,
-                          ),
-                        ),
-                      ),
-                    ),
+                    botaoPosterior(),
                   ]
                 )
                 ],
@@ -185,6 +142,75 @@ class _QuestaoViewState extends State<QuestaoView> {
               ),
             );
     }
-    return null;
+    return SizedBox(width: 10,);
+  }
+  Widget botaoPosterior(){
+    if(this.existeProxima && this._questaoAtual!=null){
+      return Material(
+              color: Colors.transparent,
+              child: Center(
+                child: Ink(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        right: BorderSide(color: Colors.black, width: 5),
+                        left: BorderSide(color: Colors.black, width: 5),
+                        top: BorderSide(color: Colors.black, width: 5),
+                        bottom: BorderSide(color: Colors.black, width: 5),),
+                      color: Colors.yellow
+                  ),
+                  child: IconButton(
+                    icon: Icon(Icons.navigate_next),
+                    iconSize: 34,
+                    color: Colors.black,
+                    onPressed: screenPosterior,
+                  ),
+                ),
+              ),
+            );
+    }
+    return SizedBox(width: 10,);
+  }
+  Widget questao(){
+    if(this._questaoAtual==null){
+      return Text("Não há questões a serem exibidas!");
+    }else{
+      return Container(
+        child: Column(
+            children: [
+              SizedBox(height: 10),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text("Q${_questaoAtual.getId().toString()}",
+                        style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold)),
+                  Text(this.cat,
+                        style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold)),
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(children: [
+                Expanded(
+                  child: Text(_questaoAtual.getDescricao(), 
+                    maxLines: 15,
+                    style: TextStyle(fontSize: 20,fontWeight: FontWeight.w300),
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.justify,),
+                ),
+              ],),
+              SizedBox(
+                height: altura,
+                child:AlternativaList(questao: this._questaoAtual)
+              ),
+            ],
+        )
+      );
+    }
   }
 }

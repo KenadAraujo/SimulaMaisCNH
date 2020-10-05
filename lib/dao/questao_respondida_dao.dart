@@ -44,12 +44,12 @@ class QuestaoRespondidaDAO extends AbstractDAO<QuestaoRespondida>{
     questao.setId(map["questao_id"]);
     
     QuestaoRespondida questaoRespondida = QuestaoRespondida();
-    questaoRespondida.id = map["id"];
-    questaoRespondida.questao = questao;
-    questaoRespondida.alternativaRespondida = map["alternativa_respondida"];
-    questaoRespondida.alternativaCorreta = map["alternativa_correta"];
-    questaoRespondida.dataResposta = map["data_resposta"];
-    questaoRespondida.categoria = map["categoria_da_questao"];
+    questaoRespondida.setId(map["id"]);
+    questaoRespondida.setQuestao(questao);
+    questaoRespondida.setAlternativaRespondida(map["alternativa_respondida"]);
+    questaoRespondida.setAlternativaCorreta(map["alternativa_correta"]);
+    questaoRespondida.setDataResposta(DateTime.tryParse(map["data_resposta"]));
+    questaoRespondida.setCategoria(map["categoria_da_questao"]);
     return questaoRespondida;
   }
   List<QuestaoRespondida> toModelList(List<Map> map){
@@ -59,14 +59,14 @@ class QuestaoRespondidaDAO extends AbstractDAO<QuestaoRespondida>{
     });
     return questoesRespondidas;
   }
-  Map toMap(QuestaoRespondida model){
+  Map<String,dynamic> toMap(QuestaoRespondida model){
     return {
-      "id": model.id,
+      "id": model.getId(),
       "questao_id":model.questao.getId(),
-      "alternativa_respondida":model.alternativaRespondida,
-      "alternativa_correta":model.alternativaCorreta,
-      "data_resposta":model.dataResposta,
-      "categoria_da_questao":model.categoria
+      "alternativa_respondida":model.getAlternativaRespondida(),
+      "alternativa_correta":model.getAlternativaCorreta(),
+      "data_resposta":model.getDataResposta().toString(),
+      "categoria_da_questao":model.getCategoria()
     };
   }
 }
