@@ -14,7 +14,7 @@ class _HomeViewState extends State<HomeView> {
     Navigator.pushNamed(context, '/categorias');
   }
   void irParaSimulados(){
-
+    Navigator.pushNamed(context, '/simulado_home');
   }
   void irParaProgressoDoUsuario(){
 
