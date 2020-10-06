@@ -2,13 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simulamaiscnh/dao/questao_dao.dart';
 import 'package:simulamaiscnh/views/components/lists/simulado_categorias_list.dart';
 
-class SimuladoHomeView extends StatefulWidget {
-  
-  @override
-  _SimuladoHomeViewState createState() => _SimuladoHomeViewState();
-}
-
-class _SimuladoHomeViewState extends State<SimuladoHomeView> {
+class SimuladoHomeView extends StatelessWidget {
 
   Map<String,dynamic> _simulado = {
     "Meio ambiente":3,
@@ -18,11 +12,6 @@ class _SimuladoHomeViewState extends State<SimuladoHomeView> {
     "Medicina de tráfego":3
   };
   
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     var largura = MediaQuery.of(context).size.width*0.9;
