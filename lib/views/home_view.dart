@@ -3,18 +3,15 @@ import 'package:simulamaiscnh/api/questao_api.dart';
 import 'package:simulamaiscnh/dao/questao_dao.dart';
 import 'package:simulamaiscnh/utils/icons.dart';
 
-class HomeView extends StatefulWidget {
-  @override
-  _HomeViewState createState() => _HomeViewState();
-}
+class HomeView extends StatelessWidget {
 
-class _HomeViewState extends State<HomeView> {
-  
+  BuildContext context;
+
   void irParaCategorias(){
-    Navigator.pushNamed(context, '/categorias');
+    Navigator.pushNamed(this.context, '/categorias');
   }
   void irParaSimulados(){
-    Navigator.pushNamed(context, '/simulado_home');
+    Navigator.pushNamed(this.context, '/simulado_home');
   }
   void irParaProgressoDoUsuario(){
 
@@ -25,6 +22,7 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    this.context = context;
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
