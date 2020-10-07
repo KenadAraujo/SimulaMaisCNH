@@ -61,15 +61,28 @@ class _CategoriasListState extends State<CategoriasList> {
                   borderRadius: BorderRadius.circular(5))),
                 ),
           ),
-          onTap: ()=>{
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => QuestaoView(categoria: this._categorias[index])
-              ))
+          onTap: () =>{
+            _redirecionarParaQuestoes(this._categorias[index])
           },
         );
       }
     );
+  }
+
+  _redirecionarParaQuestoes(String categoria){
+    QuestaoDAO questaoDAO = QuestaoDAO();
+    questaoDAO.quantidadeQuestoesNaoResolvidas(categoria).then((qnt) =>{
+      if(qnt>0){
+        Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => QuestaoView(categoria: categoria)
+              ))
+      }else{
+        Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text("Não há questões não respondidas nessa categoria!"),
+        ))
+      }
+    });
   }
 }

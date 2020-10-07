@@ -16,7 +16,7 @@ class QuestaoView extends StatefulWidget {
 }
 
 class _QuestaoViewState extends State<QuestaoView> {
-  Questao _questaoAtual = Questao();
+  Questao _questaoAtual = null;
 
   String cat;
   int numeroQuestao;
@@ -174,7 +174,7 @@ class _QuestaoViewState extends State<QuestaoView> {
     return SizedBox(width: 10,);
   }
   Widget questao(){
-    if(this._questaoAtual==null){
+    if(this._questaoAtual==null && this._questaoAtual.getId()==null){
       return Text("Não há questões a serem exibidas!");
     }else{
       return Container(
