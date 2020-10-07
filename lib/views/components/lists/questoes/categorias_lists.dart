@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:simulamaiscnh/dao/questao_dao.dart';
-import 'package:simulamaiscnh/views/questao_view.dart';
+import 'package:simulamaiscnh/views/questoes/questao_view.dart';
 
 class CategoriasList extends StatefulWidget {
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simulamaiscnh/dao/questao_dao.dart';
-import 'package:simulamaiscnh/views/components/lists/simulado_categorias_list.dart';
+import 'package:simulamaiscnh/views/components/lists/simulados/simulado_categorias_list.dart';
 
 class SimuladoHomeView extends StatelessWidget {
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:simulamaiscnh/dao/questao_dao.dart';
-import 'package:simulamaiscnh/views/categoria_view.dart';
+import 'package:simulamaiscnh/views/questoes/categoria_view.dart';
 import 'package:simulamaiscnh/views/home_view.dart';
-import 'package:simulamaiscnh/views/questao_view.dart';
-import 'package:simulamaiscnh/views/simulado_home_view.dart';
+import 'package:simulamaiscnh/views/questoes/questao_view.dart';
+import 'package:simulamaiscnh/views/simulados/simulado_home_view.dart';
 import 'package:simulamaiscnh/views/splash_view.dart';
 
 void main() {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simulamaiscnh/dao/questao_dao.dart';
 import 'package:simulamaiscnh/models/questao.dart';
-import 'package:simulamaiscnh/views/components/lists/alternativa_lists.dart';
+import 'package:simulamaiscnh/views/components/lists/questoes/alternativa_lists.dart';
 
 class QuestaoView extends StatefulWidget {
   

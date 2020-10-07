@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simulamaiscnh/views/components/lists/categorias_lists.dart';
+import 'package:simulamaiscnh/views/components/lists/questoes/categorias_lists.dart';
 
 class CategoriaView extends StatefulWidget {
   @override
