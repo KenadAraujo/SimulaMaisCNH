@@ -1,6 +1,6 @@
 # Simula Mais CNH
 
-Esse é um projeto com o objetivo de criar um simulador de questões para a avaliação teórica do Dentran de diversos estados. Esse app será escrito em Flutter e ainda não está públicado na Google Play
+Esse é um projeto com o objetivo de criar um simulador de questões para a avaliação teórica do Dentran de diversos estados. Esse app será escrito em Flutter e ainda não está públicado na Google Play, porém você pode acompanhar o progresso do app na aba "projects" desse repositório;
 
 ## Tarefas
 
