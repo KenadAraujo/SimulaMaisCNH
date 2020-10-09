@@ -1,65 +1,76 @@
 import 'package:simulamaiscnh/dao/questao_respondida_dao.dart';
 import 'package:simulamaiscnh/models/questao.dart';
+import 'package:simulamaiscnh/models/simulado.dart';
 
 class QuestaoRespondida{
-  int id;
-  Questao questao;
-  String alternativaRespondida;
-  String alternativaCorreta;
-  DateTime dataResposta;
-  String categoria;
+  int _id;
+  Questao _questao;
+  String _alternativaRespondida;
+  String _alternativaCorreta;
+  DateTime _dataResposta;
+  String _categoria;
+  Simulado _simulado;
 
   QuestaoRespondida(){
     
   }
 
   QuestaoRespondida.build(Questao questao, String alternativaRespondida){
-    this.questao = questao;
-    this.alternativaRespondida = alternativaRespondida;
-    this.alternativaCorreta = questao.getRespostaCorreta();
-    this.dataResposta = DateTime.now();
-    this.categoria = questao.getCategoria();
+    this._questao = questao;
+    this._alternativaRespondida = alternativaRespondida;
+    this._alternativaCorreta = questao.getRespostaCorreta();
+    this._dataResposta = DateTime.now();
+    this._categoria = questao.getCategoria();
+    this._simulado = null;
   }
 
   int getId(){
-    return this.id;
+    return this._id;
   }
   void setId(int id){
-    this.id = id;
+    this._id = id;
   }
 
   Questao getQuestao(){
-    return this.questao;
+    return this._questao;
   }
   void setQuestao(Questao questao){
-    this.questao = questao;
+    this._questao = questao;
   }
 
   String getAlternativaRespondida(){
-    return this.alternativaRespondida;
+    return this._alternativaRespondida;
   }
   void setAlternativaRespondida(String alternativaRespondida){
-    this.alternativaRespondida = alternativaRespondida;
+    this._alternativaRespondida = alternativaRespondida;
   }
 
   String getAlternativaCorreta(){
-    return this.alternativaCorreta;
+    return this._alternativaCorreta;
   }
   void setAlternativaCorreta(String alternativaCorreta){
-    this.alternativaCorreta = alternativaCorreta;
+    this._alternativaCorreta = alternativaCorreta;
   }
 
   DateTime getDataResposta(){
-    return this.dataResposta;
+    return this._dataResposta;
   }
   void setDataResposta(DateTime dataResposta){
-    this.dataResposta = dataResposta;
+    this._dataResposta = dataResposta;
   }
 
   String getCategoria(){
-    return this.categoria;
+    return this._categoria;
   }
   void setCategoria(String categoria){
-    this.categoria = categoria;
+    this._categoria = categoria;
+  }
+
+  Simulado getSimulado(){
+    return this._simulado;
+  }
+
+  void setSimulado(Simulado simulado){
+    this._simulado = simulado;
   }
 }

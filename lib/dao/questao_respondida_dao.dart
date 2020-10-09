@@ -3,6 +3,7 @@ import 'package:simulamaiscnh/dao/dao.dart';
 import 'package:simulamaiscnh/dao/questao_dao.dart';
 import 'package:simulamaiscnh/models/questao.dart';
 import 'package:simulamaiscnh/models/questao_respondida.dart';
+import 'package:simulamaiscnh/models/simulado.dart';
 import 'package:sqflite/sqflite.dart';
 
 class QuestaoRespondidaDAO extends AbstractDAO<QuestaoRespondida>{
@@ -15,11 +16,11 @@ class QuestaoRespondidaDAO extends AbstractDAO<QuestaoRespondida>{
   }
   Future<void> update(QuestaoRespondida modelo) async{
     Database database = await DAO.instance.database;
-    await database.update(tableName, toMap(modelo),where: "id = ?",whereArgs: [modelo.id]);
+    await database.update(tableName, toMap(modelo),where: "id = ?",whereArgs: [modelo.getId()]);
   }
   Future<void> delete(QuestaoRespondida modelo) async{
     Database database = await DAO.instance.database;
-    await database.delete(tableName,where: "id = ?",whereArgs: [modelo.id]);
+    await database.delete(tableName,where: "id = ?",whereArgs: [modelo.getId()]);
   }
   Future<QuestaoRespondida> find(int id) async{
     Database database = await DAO.instance.database;
@@ -43,6 +44,14 @@ class QuestaoRespondidaDAO extends AbstractDAO<QuestaoRespondida>{
     Questao questao = Questao();
     questao.setId(map["questao_id"]);
     
+    Simulado simulado = null;
+    int simulado_id = map["simulado_id"];
+    if(simulado_id!=null){
+      simulado = Simulado.build();
+      simulado.setId(simulado_id);
+      simulado.setDataSimulado(null);
+    }
+
     QuestaoRespondida questaoRespondida = QuestaoRespondida();
     questaoRespondida.setId(map["id"]);
     questaoRespondida.setQuestao(questao);
@@ -60,13 +69,18 @@ class QuestaoRespondidaDAO extends AbstractDAO<QuestaoRespondida>{
     return questoesRespondidas;
   }
   Map<String,dynamic> toMap(QuestaoRespondida model){
+    int simulado_id = null;
+    if(model.getSimulado()!=null){
+      simulado_id = model.getSimulado().getId();
+    }
     return {
       "id": model.getId(),
-      "questao_id":model.questao.getId(),
+      "questao_id":model.getQuestao().getId(),
       "alternativa_respondida":model.getAlternativaRespondida(),
       "alternativa_correta":model.getAlternativaCorreta(),
       "data_resposta":model.getDataResposta().toString(),
-      "categoria_da_questao":model.getCategoria()
+      "categoria_da_questao":model.getCategoria(),
+      "simulado_id":simulado_id
     };
   }
 }

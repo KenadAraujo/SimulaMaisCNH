@@ -50,9 +50,15 @@ class DAO{
         alternativa_respondida VARCHAR (2),
         alternativa_correta    VARCHAR (2),
         data_resposta          DATETIME,
-        categoria_da_questao   VARCHAR (200) 
+        categoria_da_questao   VARCHAR (200),
+        simulado_id INTEGER 
     );''');
     print("TABELA resposta_questao CRIADA!");
+    await db.execute(''' CREATE TABLE simulado (
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
+        simulado_id INTEGER 
+    );''');
+    print("TABELA simulado CRIADA!");
   }
   Future _onUpgrade(Database db,int oldVersion, int newVersion) async{
     if(newVersion==2){
@@ -62,9 +68,15 @@ class DAO{
           alternativa_respondida VARCHAR (2),
           alternativa_correta    VARCHAR (2),
           data_resposta          DATETIME,
-          categoria_da_questao   VARCHAR (200) 
+          categoria_da_questao   VARCHAR (200),
+          simulado_id INTEGER
       );''');
       print("TABELA resposta_questao CRIADA!");
+      await db.execute(''' CREATE TABLE simulado (
+          id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
+          simulado_id INTEGER 
+      );''');
+      print("TABELA simulado CRIADA!");
     }
   }
 }
