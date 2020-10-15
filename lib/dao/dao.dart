@@ -56,7 +56,7 @@ class DAO{
     print("TABELA resposta_questao CRIADA!");
     await db.execute(''' CREATE TABLE simulado (
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
-        simulado_id INTEGER 
+        data          DATETIME,
     );''');
     print("TABELA simulado CRIADA!");
   }
@@ -73,8 +73,8 @@ class DAO{
       );''');
       print("TABELA resposta_questao CRIADA!");
       await db.execute(''' CREATE TABLE simulado (
-          id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
-          simulado_id INTEGER 
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
+        data          DATETIME,
       );''');
       print("TABELA simulado CRIADA!");
     }
